@@ -1,3 +1,25 @@
+/*
+ * Core HTML5 Canvas (Example Code)
+ * Copyright (C) 2012 David Geary.
+ *
+ * Edits by Revlin John
+ * Contact: stylogicalmaps@gmail.com
+ * Website: stymaps.universalsoldier.ca
+ *
+ * Most of the code in these examples is byte-for-byte
+ * as written by Mr. Geary. However, I wanted to update
+ * some of the examples so that they would perform well
+ * when run in the Android browser. 
+ * I will list which examples have been modified as I 
+ * edit them...
+ * Rev
+ *
+ * Modified:
+ *   Example 1.9
+ *
+ */
+ 
+
 This is the source code from the book Core HTML5 Canvas, published by
 Prentice-Hall in May 2012. See LICENSE.txt for the minimal restrictions on its
 use. (Yes, you can use any of the code in commercial products as long as you're

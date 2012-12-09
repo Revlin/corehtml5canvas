@@ -2,6 +2,10 @@
  * Copyright (C) 2012 David Geary. This code is from the book
  * Core HTML5 Canvas, published by Prentice-Hall in 2012.
  *
+ * Edits by Revlin John
+ * Contact: stylogicalmaps@gmail.com
+ * Website: stymaps.universalsoldier.ca
+ *
  * License:
  *
  * Permission is hereby granted, free of charge, to any person 
@@ -37,6 +41,20 @@ var canvas = document.getElementById('canvas'),
     mousedown = {},
     rubberbandRectangle = {},
     dragging = false;
+
+  /* REV EDIT:
+   * Get canvas properties 
+   */
+  var win = window,
+      mouse_x, mouse_y,
+      cv = canvas,
+      context = canvas.getContext('2d'),
+      bb = canvas.getBoundingClientRect(),
+      cv_w = (canvas.width/bb.width),
+      cv_h = (canvas.height/bb.height),
+      cv_pos = { top: bb.top, left: bb.left };
+  win.scrollTo(bb.left, bb.top);
+  /* END EDIT */
 
 // Functions.....................................................
 
@@ -76,6 +94,12 @@ function rubberbandEnd() {
                         0, 0, canvas.width, canvas.height);
    }
    catch (e) {
+     /* REV EDIT:
+      * Optional alert shows stats when rubberband redraw fails
+      */
+     //alert( " Redraw failed: "+ e.message +"\n Rubberband dimensions: \n"+ JSON.stringify(rubberbandRectangle) );
+     /* END EDIT */
+    
       // suppress error message when mouse is released
       // outside the canvas
    }
@@ -114,29 +138,68 @@ function resetRubberbandRectangle() {
 
 // Event handlers...............................................
 
-canvas.onmousedown = function (e) { 
-   var x = e.x || e.clientX,
-       y = e.y || e.clientY;
+/* REV EDIT:
+ * Added event handlers for devices with touch screens
+ */
 
-	e.preventDefault();
-   rubberbandStart(x, y);
-};
+if ('ontouchend' in document.createElement('div'))  {
+  canvas.ontouchstart = function(e){
+    //Debugger.log(event.touches);
+    mouse_x = (event.touches[0].clientX + win.pageXOffset) * cv_w;
+    mouse_y = (event.touches[0].clientY + win.pageYOffset) * cv_h;
+  
+    var x = mouse_x,
+         y = mouse_y;
 
-window.onmousemove = function (e) { 
-   var x = e.x || e.clientX,
-       y = e.y || e.clientY;
+    e.preventDefault();
+    rubberbandStart(x, y);
+  };
 
-	e.preventDefault();
-	if (dragging) {
+  canvas.ontouchmove = function (e) { 
+    //Debugger.log(event.touches);
+    mouse_x = (event.touches[0].clientX + win.pageXOffset) * cv_w;
+    mouse_y = (event.touches[0].clientY + win.pageYOffset) * cv_h;
+  
+    var x = mouse_x,
+         y = mouse_y;
+
+    e.preventDefault();
+    if (dragging) {
       rubberbandStretch(x, y);
     }
-}
+  };
 
-window.onmouseup = function (e) {
-	e.preventDefault();
-   rubberbandEnd();
-}
+  canvas.ontouchend = function (e) {
+    e.preventDefault();
+    rubberbandEnd();
+  };
 
+} else {
+/* END EDIT */
+
+  canvas.onmousedown = function (e) { 
+    var x = e.x || e.clientX,
+         y = e.y || e.clientY;
+
+    e.preventDefault();
+    rubberbandStart(x, y);
+  };
+
+  window.onmousemove = function (e) { 
+    var x = e.x || e.clientX,
+           y = e.y || e.clientY;
+
+    e.preventDefault();
+    if (dragging) {
+      rubberbandStretch(x, y);
+    }
+  };
+
+  window.onmouseup = function (e) {
+    e.preventDefault();
+    rubberbandEnd();
+  };
+}
 // Event handlers..............................................
    
 image.onload = function () { 

@@ -1,7 +1,10 @@
-<!DOCTYPE html>
 <!--
 - Copyright (C) 2012 David Geary. This code is from the book
 - Core HTML5 Canvas, published by Prentice-Hall in 2012.
+-
+- Edits by Revlin John
+- Contact: stylogicalmaps@gmail.com
+- Website: stymaps.universalsoldier.ca
 -
 - License:
 -
@@ -30,8 +33,15 @@
 - OTHER DEALINGS IN THE SOFTWARE.
 -->
 
+<!DOCTYPE html>
 <html>
    <head>
+    <!-- REV EDIT:
+    - Disable touch zooming
+    -->
+    <meta name="viewport" content="user-scalable=no" />
+    <!-- END EDIT -->
+    
      <title>Rubberbands with layered elements</title>
 
       <style> 
@@ -48,13 +58,17 @@
             padding: 0;
          }
 
+         /* REV EDIT:
+          * Reposition 'RESET' button
+          */
          #controls {
-            margin: 20px 0px 20px 20px;
+            margin: -80px 0px 20px 20px;
          }
+         /* END EDIT */
 
          #rubberbandDiv {
             position: absolute;
-            border: 3px solid yellow;
+            border: 2px solid yellow;
             cursor: crosshair;
             display: none;
          }
@@ -63,15 +77,20 @@
    </head>
 
   <body>
-      <div id='controls'>
-         <input type='button' id='resetButton' value='Reset'/>
-      </div>
 
       <div id='rubberbandDiv'></div>
 
-      <canvas id='canvas' width='800' height='520'>
+      <!-- REV EDIT:
+      - Resize canvas for small screens
+      - Move 'RESET' button
+      -->
+      <canvas id='canvas' width='640' height='360'>
          Canvas not supported
       </canvas>
+      <div id='controls'>
+         <input type='button' id='resetButton' value='Reset'/>
+      </div>
+      <!-- END EDIT -->
         
      <script src='example.js'></script>
   </body>
