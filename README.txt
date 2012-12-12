@@ -15,6 +15,11 @@
  * Rev
  *
  * Modified:
+ *   Example 1.1 
+ *   Example 1.3 
+ *   Example 1.4 
+ *   Example 1.5 
+ *   Example 1.8 
  *   Example 1.9
  *
  */
