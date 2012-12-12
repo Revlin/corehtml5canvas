@@ -144,7 +144,6 @@ function resetRubberbandRectangle() {
 
 if ('ontouchend' in document.createElement('div'))  {
   canvas.ontouchstart = function(e){
-    //Debugger.log(event.touches);
     mouse_x = (event.touches[0].clientX + win.pageXOffset) * cv_w;
     mouse_y = (event.touches[0].clientY + win.pageYOffset) * cv_h;
   
@@ -156,7 +155,6 @@ if ('ontouchend' in document.createElement('div'))  {
   };
 
   canvas.ontouchmove = function (e) { 
-    //Debugger.log(event.touches);
     mouse_x = (event.touches[0].clientX + win.pageXOffset) * cv_w;
     mouse_y = (event.touches[0].clientY + win.pageYOffset) * cv_h;
   
@@ -200,6 +198,7 @@ if ('ontouchend' in document.createElement('div'))  {
     rubberbandEnd();
   };
 }
+
 // Event handlers..............................................
    
 image.onload = function () { 
