@@ -39,6 +39,21 @@ var canvas = document.getElementById('canvas'),
     RADIUS = canvas.width/2 - MARGIN,
     HAND_RADIUS = RADIUS + NUMERAL_SPACING;
 
+  /* REV EDIT:
+   * Get canvas properties 
+   * Scroll canvas into full view
+   */
+  var win = window,
+      mouse_x, mouse_y,
+      cv = canvas,
+      context = canvas.getContext('2d'),
+      bb = canvas.getBoundingClientRect(),
+      cv_w = (canvas.width/bb.width),
+      cv_h = (canvas.height/bb.height),
+      cv_pos = { top: bb.top, left: bb.left };
+  win.scrollTo(bb.left, bb.top);
+  /* END EDIT */
+
 // Functions.....................................................
 
 function drawCircle() {
