@@ -1,7 +1,10 @@
-<!DOCTYPE html>
 <!--
 - Copyright (C) 2012 David Geary. This code is from the book
 - Core HTML5 Canvas, published by Prentice-Hall in 2012.
+-
+- Edits by Revlin John
+- Contact: stylogicalmaps@gmail.com
+- Website: stymaps.universalsoldier.ca
 -
 - License:
 -
@@ -30,8 +33,16 @@
 - OTHER DEALINGS IN THE SOFTWARE.
 -->
 
+<!DOCTYPE html>
+<html>
    <head>
-     <title>Canvas element size: 600 x 300, Canvas drawing surface size: 300 x 150</title>
+    <!-- REV EDIT:
+    - Disable touch zooming
+    -->
+    <meta name="viewport" content="user-scalable=no" />
+    <!-- END EDIT -->
+    
+     <title>Canvas element size: 640 x 360, Canvas drawing surface size: 320 x 240</title>
 
       <style> 
          body {
@@ -43,16 +54,23 @@
             padding: 20px;
             background: #ffffff;
             border: thin inset #aaaaaa;
-            width: 600px;  /* Sets only the width and height of */
-            height: 300px; /* the canvas element, not the drawing surface */
+            /* REV EDIT: 
+             * Resize canvas
+             */
+            width: 640px;  /* Sets only the width and height of */
+            height: 360px; /* the canvas element, not the drawing surface */
+            /* END EDIT */
          }
       </style>
    </head>
 
   <body>
-    <canvas id='canvas'>
-      Canvas not supported
-    </canvas>
+      <!-- REV EDIT:
+      - Resize canvas
+      -->
+      <canvas id='canvas' width='320' height='240'>
+         Canvas not supported
+      </canvas>
 
     <script src='example.js'></script>
   </body>

@@ -1,0 +1,3 @@
+[submodule "shared/jsgif"]
+	path = shared/jsgif
+	url = git@github.com:antimatter15/jsgif.git

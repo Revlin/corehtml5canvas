@@ -110,23 +110,31 @@ function drawClock() {
 // Event handlers................................................
 
 snapshotButton.onclick = function (e) {
-   var dataUrl;
+    var dataUrl;
 
-   if (snapshotButton.value === 'Take snapshot') {
-      dataUrl = canvas.toDataURL();
+    /* REV EDIT:
+     * Many versions of Android browser do not support toDataURL
+     * so we need to use an external library to encode canvas to an
+     * image file format. We have some options here and this will 
+     * demonstrate two different libraries, todataurl-png-js ( by Hans 
+     * Schmucker - http://code.google.com/p/todataurl-png-js/ ) and 
+     * jsgif ( by antimatter15 - https://github.com/antimatter15/jsgif ).
+     */
+    if (snapshotButton.value === 'Take snapshot') {
+      //dataUrl = canvas.toDataURL();
       clearInterval(loop);
       snapshotImageElement.src = dataUrl;
       snapshotImageElement.style.display = 'inline';
       canvas.style.display = 'none';
       snapshotButton.value = 'Return to Canvas';
-   }
-   else {
+    }
+    else {
       snapshotButton.value = 'Take snapshot';
       canvas.style.display = 'inline';
       snapshotImageElement.style.display = 'none';
       loop = setInterval(drawClock, 1000);
-   }
-};
+    }
+  };
 
 // Initialization................................................
 

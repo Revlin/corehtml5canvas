@@ -1,7 +1,10 @@
-<!DOCTYPE html>
 <!--
 - Copyright (C) 2012 David Geary. This code is from the book
 - Core HTML5 Canvas, published by Prentice-Hall in 2012.
+-
+- Edits by Revlin John
+- Contact: stylogicalmaps@gmail.com
+- Website: stymaps.universalsoldier.ca
 -
 - License:
 -
@@ -30,7 +33,15 @@
 - OTHER DEALINGS IN THE SOFTWARE.
 -->
 
+<!DOCTYPE html>
+<html>
    <head>
+    <!-- REV EDIT:
+    - Disable touch zooming
+    -->
+    <meta name="viewport" content="user-scalable=no" />
+    <!-- END EDIT -->
+    
      <title>Image Clock</title>
 
       <style> 
@@ -53,10 +64,13 @@
 
   <body>
     <img id='snapshotImageElement'/>
-    
-    <canvas id='canvas' width='400' height='400'>
-      Canvas not supported
-    </canvas>
+
+      <!-- REV EDIT:
+      - Resize canvas
+      -->
+      <canvas id='canvas' width='640' height='360'>
+         Canvas not supported
+      </canvas>
 
     <script src='example.js'></script>
   </body>
