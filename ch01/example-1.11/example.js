@@ -130,38 +130,40 @@ function drawClock() {
 // Event handlers................................................
 
 snapshotButton.onclick = function (e) {
+  var dataUrl;
 
-    /* REV EDIT:
-     * Integrate browser history so we can use Back and Forward.
-     * Many versions of Android browser do not support toDataURL()
-     * so we need to use an external library to encode canvas to an
-     * image file format. We have some options here, so in this app we 
-     * will use a png exporter library, called todataurl-png-js ( by Hans 
-     * Schmucker - http://code.google.com/p/todataurl-png-js/ ).
-     */
-    if (snapshotButton.value === 'Take snapshot') {
+  /* REV EDIT:
+   * Integrate browser history so we can use Back and Forward.
+   * Many versions of Android browser do not support toDataURL()
+   * so we need to use an external library to encode canvas to an
+   * image file format. We have some options here, so in this app we 
+   * will use a png exporter library, called todataurl-png-js ( by Hans 
+   * Schmucker - http://code.google.com/p/todataurl-png-js/ ).
+   */
+  if (snapshotButton.value === 'Take snapshot') {
+      spinner.style.display = 'block';
       /* Save the app's current state */
       win.location = "#snapshotImageElement";
-      spinner.style.display = 'block';
       /* toDataURL() is implemented with todataurl-png-js */
       dataUrl = canvas.toDataURL();
       snapshotImageElement.src = dataUrl;
       setTimeout( function () {
         spinner.style.display = 'none';
-        win.scrollTo( ib.top, ib.left);
-      }, 100);
-    }
-    else {
+        ib = snapshotImageElement.getBoundingClientRect();
+        win.scrollTo( ib.left, ib.top);
+      }, 10000);
+
+  } else {
       /* Return app's to previous state */
       win.history.back();
       setTimeout( function () {
         win.scrollTo(bb.left, bb.top);
       }, 100);
-    }
-  };
+
+  }
+};
 
 window.onhashchange = function(e) {
-  var dataUrl;
 
   if (! location.hash ) {
     loop = setInterval(drawClock, 1000); 
@@ -169,12 +171,14 @@ window.onhashchange = function(e) {
     canvas.style.display = 'block';
     snapshotButton.value = 'Take snapshot';
     e.preventDefault();
+
   } else if ( location.hash === '#snapshotImageElement' ) {
     clearInterval(loop);
-    snapshotImageElement.style.display = 'block';
     canvas.style.display = 'none';
+    snapshotImageElement.style.display = 'block';
     snapshotButton.value = 'Return to Canvas';
     e.preventDefault();
+
   }
 };
 /* END EDIT */
