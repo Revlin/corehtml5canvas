@@ -42,6 +42,26 @@ var canvas = document.getElementById('canvas'),
     HAND_RADIUS = RADIUS + NUMERAL_SPACING,
     loop;
 
+  /* REV EDIT:
+   * Get canvas properties 
+   * Scroll canvas into full view
+   */
+  var win = window,
+      mouse_x, mouse_y,
+      cv = canvas,
+      context = canvas.getContext('2d'),
+      bb = canvas.getBoundingClientRect(),
+      ib = snapshotImageElement.getBoundingClientRect(),
+      cv_w = (canvas.width/bb.width),
+      cv_h = (canvas.height/bb.height),
+      cv_pos = { top: bb.top, left: bb.left },  
+      spinner = document.getElementById('spinner');
+  win.scrollTo(bb.left, bb.top);
+  /* The next 2 lines are a js spinning loader by fgnass : https://gist.github.com/998900 */ 
+  document.head.insertAdjacentHTML( 'afterbegin', '<style type="text/css"> #spinner { position: relative; font-size: 22px; display: none; } #spinner b { position:absolute } #spinner b.b0 { top:00px; left:20px } #spinner b.b1 { top:03px; left:27px } #spinner b.b2 { top:10px; left:30px } #spinner b.b3 { top:17px; left:27px } #spinner b.b4 { top:20px; left:20px } #spinner b.b5 { top:17px; left:13px } #spinner b.b6 { top:10px; left:09px } #spinner b.b7 { top:03px; left:13px } #spinner b.o0 { opacity: 0.8 } #spinner b.o1 { opacity: 0.7 } #spinner b.o2 { opacity: 0.6 } #spinner b.o3 { opacity: 0.5 } #spinner b.o4 { opacity: 0.4 } #spinner b.o5 { opacity: 0.3 } #spinner b.o6 { opacity: 0.2 } #spinner b.o7 { opacity: 0.1 } </style> <!--[if lte IE 8]> <style type="text/css"> #spinner .o0 { color: #666 } #spinner .o1 { color: #777 } #spinner .o2 { color: #888 } #spinner .o3 { color: #999 } #spinner .o4 { color: #aaa } #spinner .o5 { color: #ccc } #spinner .o6 { color: #ddd } #spinner .o7 { color: #eee } </style> <![endif]-->');
+  ( function(a,b,c){ setInterval( function(){for(b=0;b<8;c||(a.innerHTML+='<b>•'),a.childNodes[b].className='b'+b+' o'+(++b-~c)%8);c=-~c}, 99 ); })( spinner );
+  /* END EDIT */
+
 // Functions.....................................................
 
 function drawCircle() {
@@ -110,31 +130,54 @@ function drawClock() {
 // Event handlers................................................
 
 snapshotButton.onclick = function (e) {
-    var dataUrl;
 
     /* REV EDIT:
-     * Many versions of Android browser do not support toDataURL
+     * Integrate browser history so we can use Back and Forward.
+     * Many versions of Android browser do not support toDataURL()
      * so we need to use an external library to encode canvas to an
-     * image file format. We have some options here and this will 
-     * demonstrate two different libraries, todataurl-png-js ( by Hans 
-     * Schmucker - http://code.google.com/p/todataurl-png-js/ ) and 
-     * jsgif ( by antimatter15 - https://github.com/antimatter15/jsgif ).
+     * image file format. We have some options here, so in this app we 
+     * will use a png exporter library, called todataurl-png-js ( by Hans 
+     * Schmucker - http://code.google.com/p/todataurl-png-js/ ).
      */
     if (snapshotButton.value === 'Take snapshot') {
-      //dataUrl = canvas.toDataURL();
-      clearInterval(loop);
+      /* Save the app's current state */
+      win.location = "#snapshotImageElement";
+      spinner.style.display = 'block';
+      /* toDataURL() is implemented with todataurl-png-js */
+      dataUrl = canvas.toDataURL();
       snapshotImageElement.src = dataUrl;
-      snapshotImageElement.style.display = 'inline';
-      canvas.style.display = 'none';
-      snapshotButton.value = 'Return to Canvas';
+      setTimeout( function () {
+        spinner.style.display = 'none';
+        win.scrollTo( ib.top, ib.left);
+      }, 100);
     }
     else {
-      snapshotButton.value = 'Take snapshot';
-      canvas.style.display = 'inline';
-      snapshotImageElement.style.display = 'none';
-      loop = setInterval(drawClock, 1000);
+      /* Return app's to previous state */
+      win.history.back();
+      setTimeout( function () {
+        win.scrollTo(bb.left, bb.top);
+      }, 100);
     }
   };
+
+window.onhashchange = function(e) {
+  var dataUrl;
+
+  if (! location.hash ) {
+    loop = setInterval(drawClock, 1000); 
+    snapshotImageElement.style.display = 'none';
+    canvas.style.display = 'block';
+    snapshotButton.value = 'Take snapshot';
+    e.preventDefault();
+  } else if ( location.hash === '#snapshotImageElement' ) {
+    clearInterval(loop);
+    snapshotImageElement.style.display = 'block';
+    canvas.style.display = 'none';
+    snapshotButton.value = 'Return to Canvas';
+    e.preventDefault();
+  }
+};
+/* END EDIT */
 
 // Initialization................................................
 

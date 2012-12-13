@@ -52,19 +52,24 @@
          #canvas {
             left: 10px;
             top: 1.5em;
-            margin: 20px;
+            margin-top: 20px;
             border: thin solid #aaaaaa;
          }
 
+        /* REV EDIT:
+         * Move control button
+         */
         #controls {
           position: relative;
-          margin-top: -80px;
+          margin: -120px 0 0 50px;
         }
+        /* END EDIT */
 
          #snapshotImageElement {
+            display: none;
             left: 10px;
             top: 1.5em;
-            margin: 20px;
+            margin-top: 20px;
             border: thin solid #aaaaaa;
          }
       </style>
@@ -72,17 +77,21 @@
 
   <body>
 
-      <!-- REV EDIT:
-      - Resize canvas and move button
-      -->
+    <!-- REV EDIT:
+    - Resize canvas and move button
+    - Include todataurl-png-js and jsgif
+    -->
       <canvas id='canvas' width='640' height='360'>
          Canvas not supported
       </canvas>
+      <img id='snapshotImageElement'/>
       <div id='controls'>
         <input id='snapshotButton' type='button' value='Take snapshot'/>
+        <div id='spinner'></div>
       </div>
-      <img id='snapshotImageElement'/>
-      <!-- END EDIT -->
+
+    <script src="../../shared/todataurl-png-js/todataurl.js"></script>
+    <!-- END EDIT -->
 
     <script src='example.js'></script>
   </body>
