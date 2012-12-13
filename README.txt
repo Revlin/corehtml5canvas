@@ -21,6 +21,7 @@
  *   Example 1.5 
  *   Example 1.8 
  *   Example 1.9
+ *   Example 1.11
  *
  */
  
