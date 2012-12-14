@@ -34,7 +34,7 @@ Array.prototype.crc32=function(start,len){
 
 
 (function(){
-	var toDataURL=function(){
+	var toDataURL = function() {
 		var imageData=Array.prototype.slice.call(this.getContext("2d").getImageData(0,0,this.width,this.height).data);
 		var w=this.width;
 		var h=this.height;
@@ -47,14 +47,15 @@ Array.prototype.crc32=function(start,len){
 		stream.push(0x08,0x06,0x00,0x00,0x00);
 		Array.prototype.push.apply(stream, stream.crc32(12,17).bytes32() );
 		var len=h*(w*4+1);
-		for(var y=0;y<h;y++)
+		for(var y=0;y<h;y++) {
 			imageData.splice(y*(w*4+1),0,0);
+                }
 		var blocks=Math.ceil(len/32768);
 		Array.prototype.push.apply(stream, (len+5*blocks+6).bytes32() );
 		var crcStart=stream.length;
 		var crcLen=(len+5*blocks+6+4);
 		stream.push(0x49,0x44,0x41,0x54,0x78,0x01);
-		for(var i=0;i<blocks;i++){
+		for(var i=0;i<blocks;i++) {
 			var blockLen=Math.min(32768,len-(i*32768));
 			stream.push(i==(blocks-1)?0x01:0x00);
 			Array.prototype.push.apply(stream, blockLen.bytes16sw() );

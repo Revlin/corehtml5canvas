@@ -151,7 +151,7 @@ snapshotButton.onclick = function (e) {
         spinner.style.display = 'none';
         ib = snapshotImageElement.getBoundingClientRect();
         win.scrollTo( ib.left, ib.top);
-      }, 10000);
+      }, 100);
 
   } else {
       /* Return app's to previous state */
