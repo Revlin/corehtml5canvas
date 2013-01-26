@@ -172,7 +172,7 @@ if ('ontouchend' in document.createElement('div'))  {
     rubberbandEnd();
   };
 
-} else {
+}
 /* END EDIT */
 
   canvas.onmousedown = function (e) { 
@@ -197,7 +197,6 @@ if ('ontouchend' in document.createElement('div'))  {
     e.preventDefault();
     rubberbandEnd();
   };
-}
 
 // Event handlers..............................................
    
